@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Туры</title>
+        <link rel="stylesheet" href="style.scss" />
+        <link rel="stylesheet" href="reset.css" />
+        <link rel="stylesheet" href="style.scss" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Caveat&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script type="module" src="script.js"></script>
+    </head>
+    <body>
+        <div class=" max-w-5xl mx-auto">
+            <h1 class="font-serif text-center text-5xl pt-5">
+                Туры моей мечты
+            </h1>
+            <div
+            class="flex flex-col items-start max-w-5xl mx-auto justify-end mt-5"
+        >
+            <button
+                class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:bg-cyan-800 hover:text-white mr-5"
+            >
+                Избранное
+            </button>
+            <form action="" method="get">
+                <input
+                    placeholder="Искать здесь..."
+                    type="search"
+                    class="bg-cyan-800 text-white py-2 px-1"
+                    id="inputText"
+                />
+                <button
+                    type="submit"
+                    class="text-sm font-serif text-gray-600 hover:underline"
+                    id="submitForm"
+                >
+                    Поиск
+                </button>
+            </form>
+        </div>
+            <nav>
+                <ul class="flex flex-row justify-between mt-5  hover:cursor-pointer">
+                    <li data-f ="All">Все туры</li>
+                    <li data-f ="Тайланд" сlass=" text-green-400  hover:underline">Тайланд</li>
+                    <li data-f ="Египет" сlass="">Египет</li>
+                    <li data-f ="Мальдивы" сlass="">Мальдивы</li>
+                    <li data-f ="Индонезия" сlass="">Индонезия</li>
+                    <li data-f ="Мексика" сlass="">Мексика</li>
+                    <li data-f ="Танзания" сlass="">Танзания</li>
+                </ul>
+            </nav>
+          
+            <div
+                class="flex flex-row items-start max-w-5xl mx-auto justify-end mt-5"
+            >
+                <p
+                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2"
+                >
+                    Сортировать:
+                </p>
+                <button
+                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
+                >
+                    По популярности
+                </button>
+                <button
+                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
+                    id="sortMinButton"
+                >
+                    От дешевых к дорогим
+                </button>
+            </div>
+           
+           
+
+            <div
+                id="container"
+                class="gap-20 max-w-5xl mx-auto grid grid-cols-3 my-10 rounded-md"
+            ></div>
+        </div>
+       
+        <div class="preloader">
+            <img src="loader.gif" alt="" />
+        </div>
+    </body>
+</html>
