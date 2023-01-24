@@ -31,73 +31,105 @@
         <script type="module" src="script.js"></script>
     </head>
     <body>
-        <div class=" max-w-5xl mx-auto">
-            <h1 class="font-serif text-center text-5xl pt-5">
-                Туры моей мечты
-            </h1>
-            <div
-            class="flex flex-col items-start max-w-5xl mx-auto justify-end mt-5"
-        >
-            <button
-                class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:bg-cyan-800 hover:text-white mr-5"
-            >
-                Избранное
-            </button>
-            <form action="" method="get">
-                <input
-                    placeholder="Искать здесь..."
-                    type="search"
-                    class="bg-cyan-800 text-white py-2 px-1"
-                    id="inputText"
-                />
-                <button
-                    type="submit"
-                    class="text-sm font-serif text-gray-600 hover:underline"
-                    id="submitForm"
-                >
-                    Поиск
-                </button>
-            </form>
-        </div>
-            <nav>
-                <ul class="flex flex-row justify-between mt-5  hover:cursor-pointer">
-                    <li data-f ="All">Все туры</li>
-                    <li data-f ="Тайланд" сlass=" text-green-400  hover:underline">Тайланд</li>
-                    <li data-f ="Египет" сlass="">Египет</li>
-                    <li data-f ="Мальдивы" сlass="">Мальдивы</li>
-                    <li data-f ="Индонезия" сlass="">Индонезия</li>
-                    <li data-f ="Мексика" сlass="">Мексика</li>
-                    <li data-f ="Танзания" сlass="">Танзания</li>
-                </ul>
-            </nav>
-          
-            <div
-                class="flex flex-row items-start max-w-5xl mx-auto justify-end mt-5"
-            >
-                <p
-                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2"
-                >
-                    Сортировать:
-                </p>
-                <button
-                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
-                >
-                    По популярности
-                </button>
-                <button
-                    class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
-                    id="sortMinButton"
-                >
-                    От дешевых к дорогим
-                </button>
-            </div>
-           
-           
+        <div class="m-auto md:w-[600px]  lg:w-[1000px]">
+                        <h1 class="font-serif text-center text-4xl lg:text-5xl  md:text-5xl mt-7 lg:pt-7">
+                            Туры моей мечты
+                        </h1>
+                    <div class="lg:flex lg:flex-col">    
+                        <div
+                            class=" flex flex-col mt-5 items-center
+                                    lg:justify-center lg:max-w-5xl lg:mx-auto lg:mt-10 lg:flex-row
+                                    "
+                        >
+                            <button
+                                class=" md:w-72 w-48 md:w-200px text-sm md:text-lg font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:bg-cyan-800 hover:text-white mr-5"
+                            >
+                                Избранное
+                            </button>
+                            <form action="" method="get">
+                                <input
+                                    placeholder="Искать здесь..."
+                                    type="search"
+                                    class=" w-48 md:w-72 bg-cyan-800 text-white py-2 px-1 mb-2 mr-5"
+                                    id="inputText"
+                                />
+                                <!--<button
+                                    type="submit"
+                                    class="text-sm font-serif text-gray-600 hover:underline"
+                                    id="submitForm"
+                                >
+                                    Поиск
+                                </button>-->
+                            </form>
+                            <button
+                                class=" md:text-lg md:w-72 w-48 text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-4 py-2 mb-2  hover:bg-cyan-800 hover:text-white mr-5"
+                                id="filterB"
+                            >
+                                Настроить фильтр
+                            </button>
+                        </div>
+                        <div id="filterBox" class=" border-solid border-2 rounded-sm border-cyan-900 px-4 py-2 m-auto hidden flex-col w-60 ">
+                            <select class="pb-1 mb-5 border-b-2 rounded-sm border-cyan-900 border-solid">
+                                <option value="7" >Рейтинг от 7</option>
+                                <option value="8" selected>Рейтинг от 8</option>
+                                <option value="9" >Рейтинг от 9</option>
+                            </select>
+                            <div class=" flex flex-col ">
+                                <p>Стоимость</p>
+                                <input type="range" id="price"  value="526000" min="20000" max="526000">
+                                <output class="" id="rangeValue">526.000 рублей</output>
+                                <div id="toSee"></div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    <nav class=" lg:m-auto">
+                            <ul class="mx-auto mt-5 flex  md:flex-row flex-col items-center hover:cursor-pointer md:justify-between md:text-lg" >
+                                    <li data-f ="All" class="mb-4 lg:mr-4 ">Все туры</li>
+                                
+                                    <li data-f="Тайланд" class="mb-4 lg:mr-4 ">Тайланд</li>
+                                    <li data-f ="Египет" class="mb-4 lg:mr-4">Египет</li>
+                                    <li data-f ="Мальдивы" class="mb-4 lg:mr-4">Мальдивы</li>
+                                
+                                
+                                    <li data-f ="Индонезия" class="mb-4 lg:mr-4">Индонезия</li>
+                                    <li data-f ="Мексика" class="mb-4 lg:mr-4">Мексика</li>
+                                    <li data-f ="Танзания" class="mb-4 lg:mr-4">Танзания</li>
+                                
+                                
+                            </ul>
+                    </nav>
+                        
+                    
+                        <!--<div
+                            class="flex flex-col items-start w-xl mx-auto justify-end mt-5"
+                        >
+                            <p
+                                class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2"
+                            >
+                                Сортировать:
+                            </p>
+                            <button
+                                class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
+                            >
+                                По популярности
+                            </button>
+                            <button
+                                class="ml-2 text-sm font-serif text-gray-600 rounded-sm border-cyan-900 px-4 py-2 mb-2 hover:border-solid hover:border-2"
+                                id="sortMinButton"
+                            >
+                                От дешевых к дорогим
+                            </button>
+                        </div>-->
 
-            <div
-                id="container"
-                class="gap-20 max-w-5xl mx-auto grid grid-cols-3 my-10 rounded-md"
-            ></div>
+                    
+
+                    
+                        <div
+                            id="container"
+                            class="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2  gap-20  mx-auto my-10 rounded-md"
+                        ></div>
+                        
         </div>
        
         <div class="preloader">
