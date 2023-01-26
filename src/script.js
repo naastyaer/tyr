@@ -203,8 +203,6 @@ inputText.addEventListener ('change', (e)=>{
     search(inputText.value)
 })
 /**/ 
-
-
 let tours
 async function initApp() {
     tours = await loadTours()
@@ -213,5 +211,3 @@ async function initApp() {
 }
 
 initApp()
-
-
