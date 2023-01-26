@@ -95,6 +95,12 @@ function renderTyr(tours) {
                     >
                     Добавить в избранное
                 </button>
+                <button
+                class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
+                id="bookingButton-${tyr.id}"
+                >
+                Забронировать
+            </button>
 
             </div>
         </div>
@@ -144,6 +150,8 @@ function addListener(tours) {
     })
     const sortMinButton = document.getElementById("sortMinButton")
     sortMinButton.addEventListener("click", () => mySort())
+
+    bookingButton.addEventListener("click", () => openModal())
 
 }
 /*фильтрация*/
@@ -270,7 +278,21 @@ filterB.addEventListener('click', function(){
     openFilter()
 })
 /**/
-
+/*функция открытия и закрытия модального окна*/
+let bookingButton = document.getElementById('bookingButton-${tyr.id}')
+console.log(bookingButton)
+let modal = document.getElementById('modal')
+function openModal(){
+    if(modal.classList.contains("flex")){
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+    } else{
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    }
+}
+bookingButton.addEventListener('click', openModal)
+/* */
 let tours
 async function initApp() {
     tours = await loadTours()
