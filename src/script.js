@@ -33,7 +33,7 @@ function renderTyr(tours) {
         container.innerHTML += `
      
         <div class="gap-10 rounded-md">
-        <div class="bg-gray-50 shadow-lg rounded-md px-4 py-2 h-[550px] md:h-[600px] w-[300px] flex flex-col justify-between box px-4 m-auto  " >
+        <div class="bg-gray-50 shadow-lg rounded-md px-4 py-2 h-[600px] md:h-[600px] w-[300px] flex flex-col justify-between box px-4 m-auto  " >
             <div class ="h-[300px]">
                 <div class="flex flex-col justify-end">
                 <div class="flex flex-col justify-end">
@@ -105,8 +105,78 @@ function renderTyr(tours) {
             </div>
         </div>
      `
+     
     })
     }
+tours.forEach((tyr) =>{
+    document.getElementById(`bookingButton-${tyr.id}`).addEventListener('click', () => {
+        console.log(tyr.id)
+        let currentID = tyr.id
+        console.log(currentID)
+        let bookingTour = tours.find((tyr) =>{
+            return tyr.id === currentID
+          })
+        console.log(bookingTour)
+        openModal()
+        const city = checkCity(bookingTour)
+        function render(bookingTour) {
+            let modalBox = document.getElementById("modalBox")
+                modalBox.innerHTML = `
+                      <div id = 'modalBoxWrapper'>
+                            <div class ="h-[300px]">
+                                <div class="flex flex-col justify-end">
+                                <div class="flex flex-col justify-end">
+                                        <img
+                                                src="${tyr.image}"
+                                                alt=""
+                                                class="rounded-md w-42 h-48"
+                                            />
+                                </div>
+                                    
+                                    <p class="text-cyan-900 text-sm pt-4 font-serif hover:underline cursore  max-[400px]: text-lg">
+                                    ${tyr.country}
+                                    ${city}
+                                    </p>
+                                    <h2 class="text-xl pb-3 font-serif font-semibold text-gray-900 max-[400px]: text-xl">
+                                    ${tyr.hotelName} 
+                                    </h2>
+                                </div>
+                            </div>
+                                <div>
+                                
+                                        <p class="text-cyan-900 text-lg  lg:text-base pt-4 font-serif font-mono hover: cursore pointer">
+                                                ${format(new Date(tyr.startTime),"dd/MM/yyyy")} 
+                                                до ${format(new Date(tyr.endTime), "dd/MM/yyyy")}
+                                                <p class="text-lg  lg:text-sm text-cyan-900 pt-1 font-serif font-mono">Продолжительность тура:
+                                                <br> ${
+                                                    differenceInDays(
+                                                    new Date(tyr.endTime),
+                                                    new Date(tyr.startTime)
+                                                    
+                                                )}
+                                                дней </p>
+                                        </p>
+                                        <p
+                                    class="text-cyan-900 text-xl lg:text-base  pt-4 pb-2 font-serif hover:underline cursore"
+                                >
+                                ${tyr.price} рублей
+                                </p>
+                                </div>
+                </div>
+             `
+            }
+            render(bookingTour)
+            
+        
+
+
+
+
+
+
+        /**/
+    })
+})
 }
 
 window.onload = function () {
@@ -148,11 +218,6 @@ function addListener(tours) {
         const priceButton = document.getElementById(`priceButton-${t.id}`)
         priceButton.addEventListener("click", () => test(t))
     })
-    const sortMinButton = document.getElementById("sortMinButton")
-    sortMinButton.addEventListener("click", () => mySort())
-
-    bookingButton.addEventListener("click", () => openModal())
-
 }
 /*фильтрация*/
 document.querySelector('nav').addEventListener('click', event => {
@@ -274,25 +339,56 @@ function openFilter(){
         filterBox.classList.add("flex");
     }
 }
-filterB.addEventListener('click', function(){
-    openFilter()
-})
+
 /**/
 /*функция открытия и закрытия модального окна*/
-let bookingButton = document.getElementById('bookingButton-${tyr.id}')
-console.log(bookingButton)
 let modal = document.getElementById('modal')
 function openModal(){
     if(modal.classList.contains("flex")){
         modal.classList.remove("flex");
         modal.classList.add("hidden");
+        clearForm()
     } else{
         modal.classList.remove("hidden");
         modal.classList.add("flex");
     }
 }
-bookingButton.addEventListener('click', openModal)
 /* */
+/*функция очистки формы*/
+function clearForm(){
+    document.getElementById("name").value = ''
+    document.getElementById("phone").value = ''
+    document.getElementById("email").value  = ''
+    document.getElementById("comment").value   = ''
+}
+
+/* */
+/*fetch запрос*/
+async function post (){
+/*считала данные из формы*/
+let customerName = document.getElementById("name").value
+let phone = document.getElementById("phone").value
+let email = document.getElementById("email").value
+let description = document.getElementById("comment").value
+const url = `https://www.bit-by-bit.ru/api/student-projects/tours/${currentID}`
+const params = {
+    customerName: "customerName",
+    phone: "phone",
+    email: "email",
+    description: "description"                     
+}
+let response = await fetch(url, {
+  method: "POST",
+  body: JSON.stringify(params)
+})
+let data = await response.json()
+console.log('111')
+}
+
+document.getElementById('buttonPost').addEventListener('click', post())
+
+/* */
+
 let tours
 async function initApp() {
     tours = await loadTours()
