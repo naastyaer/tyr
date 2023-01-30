@@ -107,8 +107,19 @@ function renderTyr(tours) {
         </div>
      `
     })
-    
     }
+    tours.forEach((tyr) =>{
+        document.getElementById(`selectedButton-${tyr.id}`).addEventListener('click', () => {
+            let selectedID = tyr.id
+            console.log(selectedID)
+            let selectedTour = tours.find((tyr) =>{
+                if (tyr.id === selectedID){
+                    selectedTours.push(tyr)
+                    console.log(selectedTours)
+                }
+              })
+        })
+    })
     
 }
 
@@ -299,13 +310,13 @@ function openModal(){
 
 /* */
 /*добавление в избранное*/
-let selectedTours = [] /*массив с выбранными турами*/
-
-
-
-
-
-
+const selectedTours = [] /*массив с выбранными турами*/
+document.getElementById('selected').addEventListener('click', function(){
+    renderTyr(selectedTours)
+})
+document.getElementById('allTours').addEventListener('click', function(){
+    renderTyr(tours)
+}) /*но если я сразу нажму при загрузке страницы, то не сработает*/
 /**/
 
 let tours
