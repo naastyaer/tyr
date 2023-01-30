@@ -92,7 +92,7 @@ function renderTyr(tours) {
                     
                 <button
                     class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
-                    id="priceButton-${tyr.id}"
+                    id="selectedButton-${tyr.id}"
                     >
                     Добавить в избранное
                 </button>
@@ -107,7 +107,9 @@ function renderTyr(tours) {
         </div>
      `
     })
+    
     }
+    
 }
 
 window.onload = function () {
@@ -296,6 +298,15 @@ function openModal(){
 }
 
 /* */
+/*добавление в избранное*/
+let selectedTours = [] /*массив с выбранными турами*/
+
+
+
+
+
+
+/**/
 
 let tours
 async function initApp() {
