@@ -111,7 +111,7 @@ function renderTyr(tours) {
     }
 tours.forEach((tyr) =>{
     document.getElementById(`bookingButton-${tyr.id}`).addEventListener('click', () => {
-        let currentID = tyr.id
+        currentID = tyr.id
         console.log('id при нажатии на забронировать = '+currentID)
         let bookingTour = tours.find((tyr) =>{
             return tyr.id === currentID
@@ -383,7 +383,12 @@ let response = await fetch(url, {
   body: JSON.stringify(params)
 })
 let data = await response.json()
-console.log('111')
+if(data.id === currentID){
+console.log('отправлено')
+} else{
+    console.log('ошибка')
+}
+
 }
 
 document.getElementById('buttonPost').addEventListener('click', function(){
