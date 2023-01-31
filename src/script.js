@@ -2,6 +2,7 @@ import { format, compareAsc,  differenceInDays } from "date-fns"
 import fi from "date-fns/esm/locale/fi/index.js"
 import { Result } from "postcss"
 import { check } from "prettier"
+let currentID
 
 async function loadTours() {
     const responsel = await fetch(
@@ -90,7 +91,7 @@ function renderTyr(tours) {
                     
                     
                 <button
-                    class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
+                    class="text-sm font-serif text-gray-600 border-solid border-2 mb-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
                     id="priceButton-${tyr.id}"
                     >
                     Добавить в избранное
@@ -110,9 +111,8 @@ function renderTyr(tours) {
     }
 tours.forEach((tyr) =>{
     document.getElementById(`bookingButton-${tyr.id}`).addEventListener('click', () => {
-        console.log(tyr.id)
         let currentID = tyr.id
-        console.log(currentID)
+        console.log('id при нажатии на забронировать = '+currentID)
         let bookingTour = tours.find((tyr) =>{
             return tyr.id === currentID
           })
@@ -366,6 +366,7 @@ function clearForm(){
 /*fetch запрос*/
 async function post (){
 /*считала данные из формы*/
+console.log("id="+currentID)
 let customerName = document.getElementById("name").value
 let phone = document.getElementById("phone").value
 let email = document.getElementById("email").value
@@ -385,7 +386,10 @@ let data = await response.json()
 console.log('111')
 }
 
-document.getElementById('buttonPost').addEventListener('click', post())
+document.getElementById('buttonPost').addEventListener('click', function(){
+    post()
+    openModal()
+})
 
 /* */
 
