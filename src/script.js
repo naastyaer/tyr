@@ -1,5 +1,4 @@
 import { format, compareAsc,  differenceInDays } from "date-fns"
-import fi from "date-fns/esm/locale/fi/index.js"
 import { Result } from "postcss"
 import { check } from "prettier"
 let currentID
@@ -17,56 +16,55 @@ function renderTyr(tours) {
     let container = document.getElementById("container")
    
     container.innerHTML = ""
-    if(!tours || tours.length === 0){
-        container.innerHTML = `
-        <div class= "">
-        </div>
-        <div>
-        <p class = "text-xl text-center lg:text-3xl"> Туры не найдены </p>
-        <p class = "text-base text-center lg:text-xl">измените параметры поиска</p>
-        </div>
-        `  
-    } else{
-
-    
     tours.forEach((tyr) => { 
         const city = checkCity(tyr)
         container.innerHTML += `
      
+
         <div class="gap-10 rounded-md">
         <div class="bg-gray-50 shadow-lg rounded-md px-4 py-2 h-[600px] md:h-[600px] w-[300px] flex flex-col justify-between box px-4 m-auto  " >
             <div class ="h-[300px]">
+
                 <div class="flex flex-col justify-end">
                 <div class="flex flex-col justify-end">
                         <img
                                 src="${tyr.image}"
                                 alt=""
-                                class="rounded-md w-42 h-48"
+                                class="rounded-md  w-96 h-48"
                             />
                             
                     
-                        <span class="absolute text-white pb-2 pl-2 flex row "
+                        <span class="absolute text-white pb-2 pl-2 flex row"
                                 >${tyr.rating}
                                 <img src="https://cdn2.iconfinder.com/data/icons/onebit/PNG/onebit_46.png" alt="" class=" w-5 ml-1">
                                 
                         </span>
                 </div>
                     
-                    <p class="text-cyan-900 text-sm pt-4 font-serif hover:underline cursore  max-[400px]: text-lg">
-                    ${tyr.country}
-                    ${city}
-                    </p>
-                    <h2 class="text-xl pb-3 font-serif font-semibold text-gray-900 max-[400px]: text-xl">
-                    ${tyr.hotelName} 
-                    </h2>
+                    <p
+                class="text-cyan-900 text-sm pt-4 font-serif hover:underline cursore">
+            ${tyr.country}
+            ${city}
+            </p>
+                        <h2
+                            class="text-xl pb-3 font-serif font-semibold text-gray-900" 
+                            
+                        >
+                        ${tyr.hotelName} 
+                        </h2>
+                    
+
+                    
+
+                    
                 </div>
             </div>
                 <div>
                 
-                        <p class="text-cyan-900 text-lg  lg:text-base pt-4 font-serif font-mono hover: cursore pointer">
+                        <p class="text-cyan-900 text-base pt-4 font-serif font-mono hover: cursore pointer">
                                 ${format(new Date(tyr.startTime),"dd/MM/yyyy")} 
                                 до ${format(new Date(tyr.endTime), "dd/MM/yyyy")}
-                                <p class="text-lg  lg:text-sm text-cyan-900 pt-1 font-serif font-mono">Продолжительность тура:
+                                <p class="text-sm text-cyan-900 pt-1 font-serif font-mono">Продолжительность тура:
                                 <br> ${
                                     differenceInDays(
                                     new Date(tyr.endTime),
@@ -76,26 +74,27 @@ function renderTyr(tours) {
                                 дней </p>
                         </p>
                         <p
-                    class="text-cyan-900 text-xl lg:text-base  pt-4 pb-2 font-serif hover:underline cursore"
+                    class="text-cyan-900 text-sm pt-4 font-serif hover:underline cursore"
                 >
                 ${tyr.price} рублей
                 </p>
                 </div>
                 
 
-            <div class="flex flex-col lg:w-60 md:w-60  sm: mx-auto justify-end ">
+            <div class="flex flex-col w-60 mx-auto justify-end">
 
-                <button class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 mb-2 hover:bg-cyan-800 hover:text-white" id="infoButton">
-                Подробнее
-                </button>  
-                    
-                    
+            <button class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 mb-2 hover:bg-cyan-800 hover:text-white" id="infoButton">
+            Подробнее
+            </button>  
+                
+                
                 <button
                     class="text-sm font-serif text-gray-600 border-solid border-2 mb-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
                     id="priceButton-${tyr.id}"
                     >
                     Добавить в избранное
                 </button>
+
                 <button
                 class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
                 id="bookingButton-${tyr.id}"
@@ -103,11 +102,14 @@ function renderTyr(tours) {
                 Забронировать
             </button>
 
+
+
             </div>
         </div>
      `
      
     })
+
     }
 tours.forEach((tyr) =>{
     document.getElementById(`bookingButton-${tyr.id}`).addEventListener('click', () => {
@@ -177,6 +179,7 @@ tours.forEach((tyr) =>{
         /**/
     })
 })
+
 }
 
 window.onload = function () {
@@ -218,6 +221,7 @@ function addListener(tours) {
         const priceButton = document.getElementById(`priceButton-${t.id}`)
         priceButton.addEventListener("click", () => test(t))
     })
+
 }
 /*фильтрация*/
 document.querySelector('nav').addEventListener('click', event => {
@@ -255,34 +259,29 @@ let submitForm = document.getElementById('submitForm')
 
 function search (text){
     let searchTours = []
-    text = text.toLowerCase()
     tours.forEach((tyr) =>{
-        
      
-        if ( tyr.cit && tyr.city.length > 0 && tyr.city.toLowerCase().includes(text) || tyr.country.toLowerCase().includes(text) ){
+        if ( tyr.city && tyr.city.length > 0 && tyr.city.includes(text) || tyr.country.includes(text) ){
             searchTours.push(tyr) 
         }
         
     
     })
     if(searchTours.length > 0){
-      renderTyr(searchTours)
-      text = ''
-      
-
+      renderTyr(searchTours)  
     }
     else{
-        renderTyr()
-        //const massge = 'Туры не найдены'
-        //alert(massge)
+        const massge = 'Туры не найдены'
+        alert(massge)
     }
     
 }
 
-inputText.addEventListener ('input', (e)=>{
+inputText.addEventListener ('change', (e)=>{
     search(inputText.value)
 })
 /**/ 
+
 
 /*выпадающий список*/
 let select = document.querySelector('select')
@@ -398,6 +397,7 @@ document.getElementById('buttonPost').addEventListener('click', function(){
 
 /* */
 
+
 let tours
 async function initApp() {
     tours = await loadTours()
@@ -406,5 +406,3 @@ async function initApp() {
 }
 
 initApp()
-
-
