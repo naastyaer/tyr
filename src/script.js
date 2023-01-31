@@ -2,6 +2,7 @@ import { format, compareAsc,  differenceInDays } from "date-fns"
 import fi from "date-fns/esm/locale/fi/index.js"
 import { Result } from "postcss"
 import { check } from "prettier"
+let currentID
 
 async function loadTours() {
     const responsel = await fetch(
@@ -32,9 +33,11 @@ function renderTyr(tours) {
         const city = checkCity(tyr)
         container.innerHTML += `
      
+
         <div class="gap-10 rounded-md">
         <div class="bg-gray-50 shadow-lg rounded-md px-4 py-2 h-[550px] md:h-[600px] w-[300px] flex flex-col justify-between box px-4 m-auto  " >
             <div class ="h-[300px]">
+
                 <div class="flex flex-col justify-end">
                 <div class="flex flex-col justify-end">
                         <img
@@ -91,6 +94,7 @@ function renderTyr(tours) {
                     
                     
                 <button
+
                     class="text-sm font-serif text-gray-600 border-solid border-2 rounded-sm border-cyan-900 px-2 py-1 hover:bg-cyan-800 hover:text-white"
                     id="selectedButton-${tyr.id}"
                     >
@@ -102,25 +106,85 @@ function renderTyr(tours) {
                     >
                     Забронировать
                 </button>
+=
 
             </div>
         </div>
      `
+     
     })
+
     }
-    tours.forEach((tyr) =>{
-        document.getElementById(`selectedButton-${tyr.id}`).addEventListener('click', () => {
-            let selectedID = tyr.id
-            console.log(selectedID)
-            let selectedTour = tours.find((tyr) =>{
-                if (tyr.id === selectedID){
-                    selectedTours.push(tyr)
-                    console.log(selectedTours)
-                }
-              })
-        })
+tours.forEach((tyr) =>{
+    document.getElementById(`bookingButton-${tyr.id}`).addEventListener('click', () => {
+        currentID = tyr.id
+        console.log('id при нажатии на забронировать = '+currentID)
+        let bookingTour = tours.find((tyr) =>{
+            return tyr.id === currentID
+          })
+        console.log(bookingTour)
+        openModal()
+        const city = checkCity(bookingTour)
+        function render(bookingTour) {
+            let modalBox = document.getElementById("modalBox")
+                modalBox.innerHTML = `
+                      <div id = 'modalBoxWrapper'>
+                            <div class ="h-[300px]">
+                                <div class="flex flex-col justify-end">
+                                <div class="flex flex-col justify-end">
+                                        <img
+                                                src="${tyr.image}"
+                                                alt=""
+                                                class="rounded-md w-42 h-48"
+                                            />
+                                </div>
+                                    
+                                    <p class="text-cyan-900 text-sm pt-4 font-serif hover:underline cursore  max-[400px]: text-lg">
+                                    ${tyr.country}
+                                    ${city}
+                                    </p>
+                                    <h2 class="text-xl pb-3 font-serif font-semibold text-gray-900 max-[400px]: text-xl">
+                                    ${tyr.hotelName} 
+                                    </h2>
+                                </div>
+                            </div>
+                                <div>
+                                
+                                        <p class="text-cyan-900 text-lg  lg:text-base pt-4 font-serif font-mono hover: cursore pointer">
+                                                ${format(new Date(tyr.startTime),"dd/MM/yyyy")} 
+                                                до ${format(new Date(tyr.endTime), "dd/MM/yyyy")}
+                                                <p class="text-lg  lg:text-sm text-cyan-900 pt-1 font-serif font-mono">Продолжительность тура:
+                                                <br> ${
+                                                    differenceInDays(
+                                                    new Date(tyr.endTime),
+                                                    new Date(tyr.startTime)
+                                                    
+                                                )}
+                                                дней </p>
+                                        </p>
+                                        <p
+                                    class="text-cyan-900 text-xl lg:text-base  pt-4 pb-2 font-serif hover:underline cursore"
+                                >
+                                ${tyr.price} рублей
+                                </p>
+                                </div>
+                </div>
+             `
+            }
+            render(bookingTour)
+            
+        
+
+
+
+
+
+
+        /**/
     })
-    
+})
+
+
 }
 
 window.onload = function () {
@@ -162,12 +226,7 @@ function addListener(tours) {
         const priceButton = document.getElementById(`priceButton-${t.id}`)
         priceButton.addEventListener("click", () => test(t))
     })
-    const sortMinButton = document.getElementById("sortMinButton")
-    sortMinButton.addEventListener("click", () => mySort())
-    bookingButton.addEventListener('click', function(){
-        openModal()
-    })
-    
+
 
 }
 /*фильтрация*/
@@ -319,6 +378,121 @@ document.getElementById('allTours').addEventListener('click', function(){
 }) /*но если я сразу нажму при загрузке страницы, то не сработает*/
 /**/
 
+/*выпадающий список*/
+let select = document.querySelector('select')
+let filterButton = document.getElementById('filterButton')
+select.addEventListener('change', function(){
+    console.log(select.value)
+    let filterTours = []
+    tours.forEach((tyr) =>{
+     
+        if ( tyr.rating >= select.value ){
+            filterTours.push(tyr) 
+        }
+        
+    
+    })
+    if(filterTours.length > 0){
+      renderTyr(filterTours) 
+      openFilter() 
+    }
+    else{
+        const massge = 'Туры не найдены'
+        alert(massge)
+        openFilter()
+        /*нужно доработать*/
+    }   
+})
+/**/ 
+/*фильтр по цене*/
+function filterByPrice(tours){
+    let price = document.getElementById('price').value
+    document.getElementById('toSee').innerHTML = ''
+    document.getElementById('toSee').innerHTML +=
+    `
+<div class="">Вы выбрали цену  ${price} рублей </div>
+    `
+const filtered = tours.filter((tour) =>{
+    return tour.price <=price
+})
+renderTyr(filtered)
+}
+document.getElementById('price').addEventListener('change', function(){
+    filterByPrice(tours)
+})
+/**/ 
+/*функция отрытия и закрытия блока с фильтрами*/
+let filterBox = document.getElementById('filterBox')
+let filterB = document.getElementById('filterB')
+function openFilter(){
+    if(filterBox.classList.contains("flex")){
+        filterBox.classList.remove("flex");
+        filterBox.classList.add("hidden");
+    } else{
+        filterBox.classList.remove("hidden");
+        filterBox.classList.add("flex");
+    }
+}
+
+/**/
+/*функция открытия и закрытия модального окна*/
+let modal = document.getElementById('modal')
+function openModal(){
+    if(modal.classList.contains("flex")){
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+        clearForm()
+    } else{
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    }
+}
+/* */
+/*функция очистки формы*/
+function clearForm(){
+    document.getElementById("name").value = ''
+    document.getElementById("phone").value = ''
+    document.getElementById("email").value  = ''
+    document.getElementById("comment").value   = ''
+}
+
+/* */
+/*fetch запрос*/
+async function post (){
+/*считала данные из формы*/
+console.log("id="+currentID)
+let customerName = document.getElementById("name").value
+let phone = document.getElementById("phone").value
+let email = document.getElementById("email").value
+let description = document.getElementById("comment").value
+const url = `https://www.bit-by-bit.ru/api/student-projects/tours/${currentID}`
+const params = {
+    customerName: "customerName",
+    phone: "phone",
+    email: "email",
+    description: "description"                     
+}
+let response = await fetch(url, {
+  method: "POST",
+  body: JSON.stringify(params)
+})
+let data = await response.json()
+if(data.id === currentID){
+console.log('отправлено')
+} else{
+    console.log('ошибка')
+}
+
+}
+
+document.getElementById('buttonPost').addEventListener('click', function(){
+    post()
+    openModal()
+})
+
+/* */
+
+
 let tours
 async function initApp() {
     tours = await loadTours()
@@ -327,5 +501,3 @@ async function initApp() {
 }
 
 initApp()
-
-
