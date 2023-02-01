@@ -167,15 +167,19 @@ tours.forEach((tyr) =>{
              `
             }
             render(bookingTour)
-
-
-
-
-
-
-
-
         /**/
+    })
+})
+   tours.forEach((tyr) =>{
+    document.getElementById(`selectedButton-${tyr.id}`).addEventListener('click', () => {
+        let selectedID = tyr.id
+        console.log(selectedID)
+        let selectedTour = tours.find((tyr) =>{
+            if (tyr.id === selectedID){
+                selectedTours.push(tyr)
+                console.log(selectedTours)
+            }
+          })
     })
 })
 }
